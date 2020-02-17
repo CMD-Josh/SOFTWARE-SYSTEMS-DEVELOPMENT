@@ -1,6 +1,5 @@
 # SOFTWARE-SYSTEMS-DEVELOPMENT
 Group repository for COM600
 
-Branch Definitions:
-Master 	- Used as group repo and experimental development
+Branch Definition:</br>
 Release - Used as final release versions for system

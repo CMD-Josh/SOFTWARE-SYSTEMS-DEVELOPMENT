@@ -49,8 +49,7 @@ public class ModelJaxbTest {
             jaxbContext = JAXBContext.newInstance(
                     "org.solent.com504.project.model.dto"
                     + ":org.solent.com504.project.model.user.dto"
-                    + ":org.solent.com504.project.model.party.dto"
-                    + ":org.solent.com504.project.model.auction.dto");
+                    + ":org.solent.com504.project.model.party.dto");
         } catch (JAXBException e) {
             throw new RuntimeException("problem creating jaxb context", e);
         }

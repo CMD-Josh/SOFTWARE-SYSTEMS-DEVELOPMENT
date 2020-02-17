@@ -10,7 +10,7 @@ To build a project using maven, navigate to the root directory for a project and
 `mvn build`
 
 ## Useful Git Commands
-`git status` -> Checks current status of the repo
-`git checkout [branch name]` -> Switches between branches
-`git add -a` -> adds all changed files to commit
+`git status` -> Checks current status of the repo</br>
+`git checkout [branch name]` -> Switches between branches</br>
+`git add -a` -> adds all changed files to commit</br>
 `git commit -m "[message]"` -> adds message to your commit

@@ -8,7 +8,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="org.solent.com504.project.model.user.dto.User"%>
 <%@page import="org.solent.com504.project.model.user.dto.UserRoles"%>
-<%@page import="org.solent.com504.project.model.party.dto.Party"%>
+<%@page import="org.solent.com504.project.model.auction.dto.Auction"%>
 <c:set var = "selectedPage" value = "admin" scope="request"/>
 <jsp:include page="header.jsp" />
 <!-- start of partys.jsp selectedPage=${selectedPage}-->
@@ -17,23 +17,19 @@
 <main role="main" class="container">
 
     <div>
-        <h1>Manage Partys</h1>
-        <p>showing ${partyListSize} partys: </p>
+        <h1>Manage auctions</h1>
+        <!--<p>showing ${partyListSize} partys: </p>-->
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">uuid</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Second Name</th>
-                    <th scope="col">Party Role</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Users</th>
-                    <th></th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="party" items="${partyList}">
+                <c:forEach var="auction" items="${partyList}">
                     <tr>
                         <td>${party.id}</td>
                         <td>${party.uuid}</td>

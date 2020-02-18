@@ -5,6 +5,7 @@
  */
 package org.solent.com504.project.model.auction.dto;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,14 +18,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Andre
  */
-
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 
 @Entity
 public class Auction {
+
     private Long id;
-    
+    private String date; 
+    private String time; 
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,4 +37,27 @@ public class Auction {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public void setDate(String date){
+        this.date = date;
+    }
+    
+    public String getDate(){
+        return date;
+    }
+
+    public void setTime(String time){
+        this.time = time;
+    }
+    
+    public String getTime(){
+        return time;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Auction{" + "id=" + id + ", Date=" + date + ", Time=" + time + ", uuid=" + id + '}';
+    }
+
 }

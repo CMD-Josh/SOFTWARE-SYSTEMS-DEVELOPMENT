@@ -65,6 +65,8 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="${contextPath}/users">Manage Users</a></li>
                                         <li><a href="${contextPath}/partys">Manage Partys</a></li>
+                                        <li><a href="${contextPath}/auctions">Manage Auctions</a></li>
+
                                     </ul>
                                 </li>
                             </sec:authorize>

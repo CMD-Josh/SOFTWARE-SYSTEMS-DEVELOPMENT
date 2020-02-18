@@ -5,6 +5,8 @@
  */
 package org.solent.com504.project.model.auction.dto;
 
+import java.util.List;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 public class Lot {
     private Long id;
-
+    private String name; 
+        
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
@@ -33,4 +36,13 @@ public class Lot {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
+    }
+    
 }

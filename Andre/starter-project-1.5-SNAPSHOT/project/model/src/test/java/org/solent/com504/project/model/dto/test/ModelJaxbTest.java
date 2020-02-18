@@ -25,6 +25,8 @@ import org.junit.Test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
+import org.solent.com504.project.model.auction.dto.Auction;
+import org.solent.com504.project.model.auction.dto.Lot;
 
 import org.solent.com504.project.model.party.dto.Party;
 import org.solent.com504.project.model.party.dto.Address;
@@ -125,19 +127,36 @@ public class ModelJaxbTest {
             user.setPasswordConfirm("password");
             Set<Role> roles = new HashSet(Arrays.asList(role1, role2));
             user.setRoles(roles);
-
+            
+            
+            // auction test
+            Auction auction = new Auction();
+            auction.setTime("10:00");
+            auction.setDate("10/02/2019");
+            
+            
             // string writer is used to compare received object
             StringWriter sw1 = new StringWriter();
+            StringWriter sw2 = new StringWriter();
+
+            jaxbMarshaller.marshal(auction, sw2);
             jaxbMarshaller.marshal(user, sw1);
 
             LOG.debug("marshaled code" + sw1);
-
+            LOG.debug("marshaled code" + sw2);
+            
+          
             // having written the file we now read in the file for test
             Unmarshaller jaxbUnMarshaller = jaxbContext.createUnmarshaller();
             InputStream stream = new ByteArrayInputStream(sw1.toString().getBytes(StandardCharsets.UTF_8));
+            InputStream stream2 = new ByteArrayInputStream(sw2.toString().getBytes(StandardCharsets.UTF_8));
 
             User receiveduser = (User) jaxbUnMarshaller.unmarshal(stream);
+            Auction receivedAuction = (Auction) jaxbUnMarshaller.unmarshal(stream2);
+
             LOG.debug("receiveduser=" + receiveduser);
+            LOG.debug("received auction=" + receivedAuction);
+
 
         } catch (JAXBException e) {
             throw new RuntimeException("problem testing jaxb marshalling", e);

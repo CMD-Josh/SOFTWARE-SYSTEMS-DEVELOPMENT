@@ -13,7 +13,7 @@ To build a project using maven, navigate to the root directory for a project and
 `git status` -> Checks current status of the repo</br>
 `git checkout [branch name]` -> Switches between branches</br>
 `git add -a` -> adds all changed files to commit</br>
-`git commit -m "[message]"` -> adds message to your commit
-`git push/git pull` -> Push or Pull your changes to remote
-`git clone <url>` -> copy a git repository from remote source
-`git stash`-> Save changes that you don’t want to commit immediately
+`git commit -m "[message]"` -> adds message to your commit</br>
+`git push/git pull` -> Push or Pull your changes to remote</br>
+`git clone <url>` -> copy a git repository from remote source</br>
+`git stash`-> Save changes that you don’t want to commit immediately</br>

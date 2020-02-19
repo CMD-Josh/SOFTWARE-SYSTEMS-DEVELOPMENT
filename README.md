@@ -16,4 +16,5 @@ To build a project using maven, navigate to the root directory for a project and
 `git commit -m "[message]"` -> adds message to your commit</br>
 `git push/git pull` -> Push or Pull your changes to remote</br>
 `git clone <url>` -> copy a git repository from remote source</br>
+`git diff` -> Will show the changes on files. 
 `git stash`-> Save changes that you don’t want to commit immediately</br>

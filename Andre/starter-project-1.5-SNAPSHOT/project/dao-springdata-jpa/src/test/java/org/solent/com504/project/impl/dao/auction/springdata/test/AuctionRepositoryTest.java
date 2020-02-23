@@ -25,12 +25,12 @@ public class AuctionRepositoryTest {
     @Autowired
     private AuctionRepository auctionRepository = null;
 
-    @Before
-    public void before() {
-        LOG.debug("before test running");
-        assertNotNull(auctionRepository);
-        LOG.debug("before test complete");
-    }
+//    @Before
+//    public void before() {
+//        LOG.debug("before test running");
+//        assertNotNull(auctionRepository);
+//        LOG.debug("before test complete");
+//    }
 
     
     @Transactional

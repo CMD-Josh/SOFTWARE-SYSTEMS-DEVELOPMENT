@@ -49,7 +49,6 @@ public class Lot {
         //TODO: find the current highest bid in the bids array
         Bid bid = bids.get(bids.size() - 1);
         this.highestBidPrice = bid.getValue();
-        
     }
 
     public Integer getDuration() {

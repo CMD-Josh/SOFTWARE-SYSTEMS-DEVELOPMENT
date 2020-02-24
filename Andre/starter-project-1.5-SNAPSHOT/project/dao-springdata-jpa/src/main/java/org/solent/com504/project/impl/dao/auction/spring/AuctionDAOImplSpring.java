@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.solent.com504.project.model.auction.dao.AuctionDAO;
 import org.solent.com504.project.impl.dao.auction.springdata.AuctionRepository;
+import org.solent.com504.project.model.lot.dto.Lot;
 
 
 /**
@@ -24,40 +25,31 @@ public class AuctionDAOImplSpring implements AuctionDAO {
     private AuctionRepository auctionRepository = null;
 
     @Override
-    public Auction findById(Long id) {
-        return auctionRepository.getOne(id);
+    public Long findAuctionById(Long id){
+        return id;
     }
-
+            
     @Override
-    public Auction save(Auction Auction) {
-        return auctionRepository.save(Auction);
-    }
-
-    @Override
-    public List<Auction> findAll() {
+    public List<Auction> findAll(){
         return auctionRepository.findAll();
     }
 
     @Override
-    public void deleteById(long id) {
-        auctionRepository.deleteById(id);
-    }
-
-    @Override
-    public void delete(Auction auction) {
-        auctionRepository.delete(auction);
-    }
-
-    @Override
-    public void deleteAll() {
+    public boolean deleteAutcion(Auction auction){
         auctionRepository.deleteAll();
+        return true;
     }
+//
+//    @Override
+//    public List<Lot> getAuctionLotsById(Long auctionId){
+//        List<Lot> lots = auctionRepository.getAuctionLotsById(auctionId);
+//        return lots;
+//    }
 
     @Override
-    public Auction findByUuid(String uuid) {
-        Auction auction = new Auction();
+    public Auction updateAuction(Auction auction){
+        auctionRepository.save(auction);
         return auction;
     }
-    
     
 }

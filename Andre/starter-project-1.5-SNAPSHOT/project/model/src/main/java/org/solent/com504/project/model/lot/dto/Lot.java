@@ -1,5 +1,6 @@
 package org.solent.com504.project.model.lot.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.solent.com504.project.model.bid.dto.Bid;
@@ -8,9 +9,9 @@ public class Lot {
 
     private Long id;
 
-    private Double reservedPrice;
+    private Double reservedPrice = 0.0;
 
-    private Double highestBidPrice;
+    private Double highestBidPrice = 0.0;
 
     private Integer duration;
 
@@ -22,7 +23,7 @@ public class Lot {
 
     private Integer quantity;
 
-    private List<Bid> bids;
+    private List<Bid> bids = new ArrayList();
 
     public Long getId() {
         return id;
@@ -46,9 +47,8 @@ public class Lot {
 
     private void setHighestBidPrice() {
         //TODO: find the current highest bid in the bids array
-        Bid bid = bids.get(bids.size());
+        Bid bid = bids.get(bids.size() - 1);
         this.highestBidPrice = bid.getValue();
-        
     }
 
     public Integer getDuration() {

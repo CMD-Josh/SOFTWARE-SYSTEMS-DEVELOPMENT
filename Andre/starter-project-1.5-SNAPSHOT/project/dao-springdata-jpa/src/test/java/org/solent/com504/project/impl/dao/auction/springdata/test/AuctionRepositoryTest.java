@@ -10,27 +10,32 @@ import org.apache.logging.log4j.Logger;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.solent.com504.project.impl.dao.auction.springdata.AuctionRepository;
 import org.solent.com504.project.model.auction.dto.Auction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Andre
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"/spring.xml"})
 public class AuctionRepositoryTest {
     final static Logger LOG = LogManager.getLogger(AuctionRepositoryTest.class);
 
     @Autowired
     private AuctionRepository auctionRepository = null;
 
-//    @Before
-//    public void before() {
-//        LOG.debug("before test running");
-//        assertNotNull(auctionRepository);
-//        LOG.debug("before test complete");
-//    }
+    @Before
+    public void before() {
+        LOG.debug("before test running");
+        assertNotNull(auctionRepository);
+        LOG.debug("before test complete");
+    }
 
     
     @Transactional
@@ -42,7 +47,7 @@ public class AuctionRepositoryTest {
         auction1 = auctionRepository.save(auction1);
         System.out.println("auction1=" + auction1);
 
-        Long id = auction1.getId();
+        Long id = auction1.getAuctionId();
         Auction auction2 = auctionRepository.getOne(id);
         System.out.println("auction2=" + auction2);
         LOG.debug("end of test1");

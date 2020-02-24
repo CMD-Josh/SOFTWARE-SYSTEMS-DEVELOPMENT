@@ -2,20 +2,39 @@ package org.solent.com504.project.model.auction.dto;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.solent.com504.project.model.lot.dto.Lot;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+
+@Entity
 public class Auction {
+    
+    public Long id;
     
     private Date startDate;
 
     private Date startTime;
 
     private AuctionType type;
-
+    
     private List<Lot> lots;
     
     private AuctionType auctionType;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getAuctionId() {
+        return id;
+    }
+    
     public AuctionType getAuctionType() {
         return auctionType;
     }
@@ -56,5 +75,9 @@ public class Auction {
         this.lots = lots;
     }
 
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

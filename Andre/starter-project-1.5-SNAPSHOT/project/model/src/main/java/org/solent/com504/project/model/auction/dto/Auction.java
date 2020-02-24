@@ -25,7 +25,6 @@ public class Auction {
 
     private AuctionType type;
     
-    
     private List<Lot> lots;
     
     private AuctionType auctionType;

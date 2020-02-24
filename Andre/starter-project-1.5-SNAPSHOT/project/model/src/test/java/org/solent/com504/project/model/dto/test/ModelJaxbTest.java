@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 
 import org.solent.com504.project.model.auction.dto.Auction;
@@ -233,7 +234,22 @@ public class ModelJaxbTest {
         bid.setValue(5.0);
         lot1.setReservedPrice(10.0);
         res = lot1.addBid(bid);
+        
+        LOG.debug("@@@ BID VALUE 5.0 / RESERVED PRICE 10.0 @@@ lot highest bid=" + lot1.getHighestBidPrice());
+        
         //Method should retrieve false since it is a lower bide value than the reserved price
         assertFalse(res);
+
+        bid.setValue(15.0);
+        res = lot1.addBid(bid);
+        assertTrue(res);
+
+        
+        LOG.debug("@@@ BID VALUE 15.0 / RESERVED PRICE 10.0 @@@ lot highest bid=" + lot1.getHighestBidPrice());
+        
+        bid.setValue(12.0);
+        res = lot1.addBid(bid);
+        assertFalse(res);
+
     }
 }

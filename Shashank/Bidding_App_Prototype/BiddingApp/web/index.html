@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Bidding System</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="websocket.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <h1>Bidding System Prototype</h1>
+            
+            <div id="addBid">
+                <form id="addBidForm">
+                    <h3>Add a new bid</h3>
+                    <span>Value: <input type="number" name="bidValue" id="bidValue"></span>
+                    
+                    <input type="button" class="button" value="Add" onclick=formSubmit()>
+                </form>
+            </div>
+        </div>
+        <div id="bids">
+            <h1>Bids</h1>
+            
+        </div>
+    </body>
+</html>

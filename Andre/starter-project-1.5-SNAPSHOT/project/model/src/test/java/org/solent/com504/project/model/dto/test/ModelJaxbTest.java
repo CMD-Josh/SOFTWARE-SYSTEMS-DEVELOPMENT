@@ -97,14 +97,14 @@ public class ModelJaxbTest {
             //auction
             Auction a1 = new Auction();
             //Llots 
-            List<Lot> lots = new ArrayList();
+            Set<Lot> lots = new HashSet<>();
             Lot lot1 = new Lot();
 
             //Bids
             //bid objects needs to be iplemented with getters and setters
             Bid bid1 = new Bid();
             Bid bid2 = new Bid();
-            List<Bid> bids = new ArrayList();
+            Set<Bid> bids = new HashSet<>();
             
             //bids and lots to lists
             bids.add(bid1);
@@ -126,14 +126,14 @@ public class ModelJaxbTest {
             //################### auction 2 ####################
             Auction a2 = new Auction(); 
             //Llots 
-            List<Lot> lots2 = new ArrayList();
+            Set<Lot> lots2 = new HashSet<>();
             Lot lot2 = new Lot();
 
             //Bids
             //bid objects needs to be iplemented with getters and setters
             Bid bid3 = new Bid();
             Bid bid4 = new Bid();
-            List<Bid> bids2 = new ArrayList();
+            Set<Bid> bids2 = new HashSet<>();
             
             //bids and lots to lists
             bids.add(bid3);
@@ -150,8 +150,8 @@ public class ModelJaxbTest {
             
             //################### end ##########################
 
-            //auction list conainting auctions
-            List<Auction> auctionList = new ArrayList(); 
+            //auction set conainting auctions
+            Set<Auction> auctionList = new HashSet<>(); 
             //add auctions to the auction list
             auctionList.add(a1);
             auctionList.add(a2);
@@ -250,6 +250,19 @@ public class ModelJaxbTest {
         bid.setValue(12.0);
         res = lot1.addBid(bid);
         assertFalse(res);
+        
+        bid.setValue(16.0);
+        res = lot1.addBid(bid);
+        assertTrue(res);
+        
+        LOG.debug("@@@ BID VALUE 16.0 / RESERVED PRICE 10.0 @@@ lot highest bid=" + lot1.getHighestBidPrice());
+        
+        bid.setValue(16.1); 
+        res = lot1.addBid(bid); 
+        assertTrue(res);
+        
+        LOG.debug("@@@ BID VALUE 16.1 / RESERVED PRICE 10.0 @@@ lot highest bid=" + lot1.getHighestBidPrice());
 
+        
     }
 }

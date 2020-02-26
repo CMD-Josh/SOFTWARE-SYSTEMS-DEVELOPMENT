@@ -2,6 +2,7 @@ package org.solent.com504.project.model.auction.dto;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,7 @@ public class Auction {
 
     private AuctionType type;
     
-    private List<Lot> lots;
+    private Set<Lot> lots;
     
     private AuctionType auctionType;
 
@@ -67,11 +68,11 @@ public class Auction {
         this.type = type;
     }
 
-    public List<Lot> getLots() {
+    public Set<Lot> getLots() {
         return lots;
     }
 
-    public void setLots(List<Lot> lots) {
+    public void setLots(Set<Lot> lots) {
         this.lots = lots;
     }
 

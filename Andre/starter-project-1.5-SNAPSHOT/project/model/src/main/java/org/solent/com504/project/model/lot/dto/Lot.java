@@ -2,9 +2,31 @@ package org.solent.com504.project.model.lot.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.solent.com504.project.model.bid.dto.Bid;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+
+@Entity
+@Table(name = "lot")
 public class Lot {
 
     private Long id;
@@ -22,9 +44,13 @@ public class Lot {
     private Integer life_days;
 
     private Integer quantity;
-
-    private List<Bid> bids = new ArrayList();
-
+    
+    @XmlElementWrapper(name = "bids")
+    @XmlElement(name = "bid")
+    private Set<Bid> bids = new HashSet<Bid>();
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -46,9 +72,12 @@ public class Lot {
     }
 
     private void setHighestBidPrice() {
-        //TODO: find the current highest bid in the bids array
-        Bid bid = bids.get(bids.size() - 1);
-        this.highestBidPrice = bid.getValue();
+        //This might time consuming. 
+        Double x = 0.0;
+        for(Bid bid:bids){
+           if(bid.getValue() > x){x = bid.getValue();}
+        }
+        this.highestBidPrice = x;
     }
 
     public Integer getDuration() {
@@ -91,11 +120,13 @@ public class Lot {
         this.quantity = quantity;
     }
 
-    public List<Bid> getBids() {
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "bid", joinColumns = @JoinColumn(name = "bid_id"), inverseJoinColumns = @JoinColumn(name = "lot_id"))
+    public Set<Bid> getBids() {
         return bids;
     }
 
-    public void setBids(List<Bid> bids) {
+    public void setBids(Set<Bid> bids) {
         this.bids = bids;
     }
     

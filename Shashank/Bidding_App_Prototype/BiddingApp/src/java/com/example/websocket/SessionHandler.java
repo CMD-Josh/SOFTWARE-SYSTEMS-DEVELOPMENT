@@ -11,41 +11,45 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.spi.JsonProvider;
-import javax.websocket.Session;
 
 /**
  *
  * @author shanky
  */
 @ApplicationScoped
+//@ApplicationScoped
 public class SessionHandler {
     // bid id
     private int bidId = 1;
     
+    private static Set<BidWebSocketServer> serverendpoints = new CopyOnWriteArraySet<>();
     // all the client sessions stored in HashSet
-    private final Set<Session> sessions = new HashSet<>();
+    //private final Set<Session> sessions = new HashSet<>();
     
     // all the bids stored in HashSet
     private final Set<Bid> bids = new HashSet<>();
     
     // add session
-    public void addSession(Session session) {
-        sessions.add(session);
+    public void addSession(BidWebSocketServer serverendpoint) {
+        serverendpoints.add(serverendpoint);
+        
+        System.out.println("Total sessions: "+ serverendpoints.size());
+        
         for (Bid bid : bids) {
             JsonObject addMessage = createAddMessage(bid);
-            sendToSession(session, addMessage);
+            sendToSession(serverendpoint, addMessage);
         }
     }
     
     // remove session
-    public void removeSession(Session session) {
-        sessions.remove(session);
+    public void removeSession(BidWebSocketServer serverendpoint) {
+        serverendpoints.remove(serverendpoint);
     }
     
     // the methods that operate on the Bid object
@@ -83,16 +87,20 @@ public class SessionHandler {
 
     // send message to all the connection
     private void sendToAllConnectedSessions(JsonObject message) {
-        for (Session session : sessions) {
-            sendToSession(session, message);
-        }
+        
+        serverendpoints.forEach(endpoint -> {
+            synchronized (endpoint) {
+                sendToSession(endpoint, message);
+            }
+        });
     }
+    
     // send message to current session
-    private void sendToSession(Session session, JsonObject message) {
+    private void sendToSession(BidWebSocketServer serverendpoint, JsonObject message) {
         try {
-            session.getBasicRemote().sendText(message.toString());
+            serverendpoint.session.getBasicRemote().sendText(message.toString());
         } catch (IOException ex) {
-            sessions.remove(session);
+            serverendpoints.remove(serverendpoint);
             Logger.getLogger(SessionHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

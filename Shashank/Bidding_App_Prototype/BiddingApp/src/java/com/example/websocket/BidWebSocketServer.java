@@ -29,17 +29,23 @@ import javax.json.JsonReader;
 @ServerEndpoint("/actions")
 public class BidWebSocketServer {
     
+    Session session;
+    
     //@Inject
     private SessionHandler sessionHandler = new SessionHandler();
     
     @OnOpen
     public void open(Session session) {
-        sessionHandler.addSession(session);
+        
+        System.out.println("New session opened with ID " + session.getId());
+        this.session = session;
+        sessionHandler.addSession(this);
     }
 
     @OnClose
     public void close(Session session) {
-        sessionHandler.removeSession(session);
+        System.out.println("Session - "+ session.getId()+", Closed");
+        sessionHandler.removeSession(this);
     }
 
     @OnError
@@ -49,6 +55,7 @@ public class BidWebSocketServer {
 
     @OnMessage
     public void handleMessage(String message, Session session) {
+        System.out.println("Session - "+ session.getId()+ ", sent message - " + message);
         try (JsonReader reader = Json.createReader(new StringReader(message))) {
             JsonObject jsonMessage = reader.readObject();
 

@@ -15,6 +15,7 @@ public class Bid {
     private int userId;
 
     public Bid() {
+        
     }
     
     public int getId() {

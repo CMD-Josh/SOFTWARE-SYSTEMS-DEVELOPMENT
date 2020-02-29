@@ -12,9 +12,14 @@ function init() {
 }
 
 function onMessage(event) {
-    var bid = JSON.parse(event.data);
-    if (bid.action === "add") {
-        printBidElement(bid);
+    var message = JSON.parse(event.data);
+    if (message.action === "add") {
+        printBidElement(message);
+        document.getElementById("error").innerHTML = "";
+    }else if(message.action === "highest"){
+        document.getElementById("HightBidValue").innerHTML = message.value;
+    }else if(message.action === "error"){
+        document.getElementById("error").innerHTML = message.value;
     }
 }
 

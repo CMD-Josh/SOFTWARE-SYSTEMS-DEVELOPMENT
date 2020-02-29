@@ -71,3 +71,10 @@ p {
     margin-bottom: 10px;
     color: white;
 }
+#HightBidLabel, #HightBidValue{
+    text-align: right;
+    color: aquamarine;
+}
+#error{
+    color: red;
+}

@@ -60,10 +60,14 @@ public class BidWebSocketServer {
             JsonObject jsonMessage = reader.readObject();
 
             if ("add".equals(jsonMessage.getString("action"))) {
-                Bid bid = new Bid();
-                bid.setValue(Integer.parseInt(jsonMessage.getString("value")));
-                
-                sessionHandler.addBid(bid);
+                int bidInValue = Integer.parseInt(jsonMessage.getString("value"));
+                if(bidInValue > sessionHandler.currentHighestBid.getValue()){
+                    Bid bid = new Bid();
+                    bid.setValue(bidInValue);
+                    sessionHandler.addBid(bid);
+                }else{
+                    sessionHandler.addBidError(this, "Please enter new bid higher then current highest bid.");
+                }
             }
         }
         

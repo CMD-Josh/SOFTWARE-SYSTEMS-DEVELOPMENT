@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,9 @@ import javax.json.JsonObject;
 @ApplicationScoped
 //@ApplicationScoped
 public class SessionHandler {
+    
+    Bid currentHighestBid;
+    
     // bid id
     private int bidId = 1;
     
@@ -33,7 +37,20 @@ public class SessionHandler {
     //private final Set<Session> sessions = new HashSet<>();
     
     // all the bids stored in HashSet
-    private final Set<Bid> bids = new HashSet<>();
+    private static List<Bid> bids = new CopyOnWriteArrayList<>();
+    
+    public SessionHandler(){
+        int totalbids = bids.size();
+        //System.out.println("Total bids "+ totalbids);
+        if(totalbids == 0){
+            currentHighestBid = new Bid();
+            currentHighestBid.setId(0);
+            currentHighestBid.setValue(0);
+        }else{
+            currentHighestBid = bids.get(totalbids - 1);
+        }
+        //System.out.println("Current hight bid value "+ currentHighestBid.getValue());
+    }
     
     // add session
     public void addSession(BidWebSocketServer serverendpoint) {
@@ -41,10 +58,16 @@ public class SessionHandler {
         
         System.out.println("Total sessions: "+ serverendpoints.size());
         
-        for (Bid bid : bids) {
-            JsonObject addMessage = createAddMessage(bid);
-            sendToSession(serverendpoint, addMessage);
-        }
+        JsonObject hightBidMessage = createHighestBidMessage(currentHighestBid);
+        sendToSession(serverendpoint, hightBidMessage);
+        
+// commented for future use purpose <-----------------------
+//        for (Bid bid : bids) {
+//            JsonObject addMessage = createAddMessage(bid);
+//            sendToSession(serverendpoint, addMessage);
+//        }
+//--------------------->
+
     }
     
     // remove session
@@ -61,9 +84,21 @@ public class SessionHandler {
     public void addBid(Bid bid) {
         bid.setId(bidId);
         bids.add(bid);
+        
+        currentHighestBid = bid;
+        
         bidId++;
-        JsonObject addMessage = createAddMessage(bid);
-        sendToAllConnectedSessions(addMessage);
+        
+        JsonObject addBidMessage = createAddBidMessage(bid);
+        sendToAllConnectedSessions(addBidMessage);
+        
+        JsonObject hightBidMessage = createHighestBidMessage(currentHighestBid);
+        sendToAllConnectedSessions(hightBidMessage);
+    }
+    
+    public void addBidError(BidWebSocketServer serverendpoint, String message){
+        JsonObject errorMessage = createErrorMessage(message);
+        sendToSession(serverendpoint, errorMessage);
     }
 
     public void removeBid(int id) {
@@ -73,8 +108,8 @@ public class SessionHandler {
     private Bid getBidById(int id) {
         return null;
     }
-
-    private JsonObject createAddMessage(Bid bid) {
+    
+    private JsonObject createAddBidMessage(Bid bid) {
         //JsonProvider provider = JsonProvider.provider();
         JsonObject addMessage = Json.createObjectBuilder()
                 .add("action", "add")
@@ -83,6 +118,26 @@ public class SessionHandler {
                 .build();
         return addMessage;
     }
+    
+    private JsonObject createHighestBidMessage(Bid bid) {
+        JsonObject HighestBidMessage = Json.createObjectBuilder()
+                .add("action", "highest")
+                .add("id", bid.getId())
+                .add("value", bid.getValue())
+                .build();
+        return HighestBidMessage;
+    }
+    
+    private JsonObject createErrorMessage(String errorString) {
+        
+        JsonObject HighestBidMessage = Json.createObjectBuilder()
+                .add("action", "error")
+                .add("value", errorString)
+                .build();
+        return HighestBidMessage;
+    }
+    
+    
     // end of methods for Bid object
 
     // send message to all the connection

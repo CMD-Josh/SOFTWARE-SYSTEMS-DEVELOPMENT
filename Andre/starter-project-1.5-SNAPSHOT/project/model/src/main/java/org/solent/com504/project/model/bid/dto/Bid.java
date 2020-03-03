@@ -1,13 +1,20 @@
 package org.solent.com504.project.model.bid.dto;
 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "bid")
 public class Bid {
     private Double value;
 
     private Date timeStamp;
 
-    private Long id;
+    private Long bid_id;
 
     private Long userId;
     
@@ -27,12 +34,10 @@ public class Bid {
         this.timeStamp = timeStamp;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        return bid_id;
     }
 
     public Long getUserId() {

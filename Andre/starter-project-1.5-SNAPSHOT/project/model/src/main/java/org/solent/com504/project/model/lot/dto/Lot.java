@@ -29,7 +29,7 @@ import org.solent.com504.project.model.bid.dto.Bid;
 @Table(name = "lot")
 public class Lot {
 
-    private Long id;
+    private Long lot_id;
 
     private Double reservedPrice = 0.0;
 
@@ -49,14 +49,11 @@ public class Lot {
     @XmlElement(name = "bid")
     private Set<Bid> bids = new HashSet<Bid>();
     
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        return lot_id;
     }
 
     public Double getReservedPrice() {

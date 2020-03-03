@@ -1,7 +1,6 @@
 package org.solent.com504.project.model.dto;
 
 import java.util.List;
-import java.util.Set;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -28,7 +27,7 @@ public class ReplyMessage {
     
     @XmlElementWrapper(name = "auctionlist")
     @XmlElement(name = "auction")
-    private Set<Auction> auctionList = null; 
+    private List<Auction> auctionList = null; 
   
 
     public Integer getCode() {
@@ -63,11 +62,11 @@ public class ReplyMessage {
         this.partyList = partyList;
     }
 
-    public Set<Auction> getAuctionList() {
+    public List<Auction> getAuctionList() {
         return auctionList;
     }
 
-    public void setAuctionList(Set<Auction> auctionList) {
+    public void setAuctionList(List<Auction> auctionList) {
         this.auctionList = auctionList;
     }   
 

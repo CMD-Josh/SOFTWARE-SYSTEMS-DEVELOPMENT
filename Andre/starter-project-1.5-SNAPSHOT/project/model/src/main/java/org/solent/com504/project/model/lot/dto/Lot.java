@@ -1,35 +1,20 @@
 package org.solent.com504.project.model.lot.dto;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.OneToMany;
 import org.solent.com504.project.model.bid.dto.Bid;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-
 @Entity
-@Table(name = "lot")
 public class Lot {
 
-    private Long lot_id;
+    private Long id;
 
     private Double reservedPrice = 0.0;
 
@@ -44,16 +29,17 @@ public class Lot {
     private Integer life_days;
 
     private Integer quantity;
-    
-    @XmlElementWrapper(name = "bids")
-    @XmlElement(name = "bid")
-    private Set<Bid> bids = new HashSet<Bid>();
-    
-    
+
+    private Set<Bid> bids = new HashSet();
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
-        return lot_id;
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Double getReservedPrice() {
@@ -69,10 +55,9 @@ public class Lot {
     }
 
     private void setHighestBidPrice() {
-        //This might time consuming. 
         Double x = 0.0;
         for(Bid bid:bids){
-           if(bid.getValue() > x){x = bid.getValue();}
+            if(bid.getValue() > x){x=bid.getValue();}
         }
         this.highestBidPrice = x;
     }
@@ -117,8 +102,7 @@ public class Lot {
         this.quantity = quantity;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "bid", joinColumns = @JoinColumn(name = "bid_id"), inverseJoinColumns = @JoinColumn(name = "lot_id"))
+    @OneToMany(fetch = FetchType.LAZY)
     public Set<Bid> getBids() {
         return bids;
     }
@@ -126,19 +110,32 @@ public class Lot {
     public void setBids(Set<Bid> bids) {
         this.bids = bids;
     }
-    
+
     //before adding a bid to a lot, the bid must have a higher value that the bid that was added before
-    public Boolean addBid(Bid bid){
+    public Boolean addBid(Bid bid) {
         //before adding a bid to a lot, the bid must have a higher value that the bid that was added before
-        if(bid.getValue() > highestBidPrice && bid.getValue() > reservedPrice){
-                bids.add(bid);
-                //set the new highest bid price
-                setHighestBidPrice();
-                return true;
-            }
-        
+        if (bid.getValue() > highestBidPrice && bid.getValue() > reservedPrice) {
+            bids.add(bid);
+            //set the new highest bid price
+            setHighestBidPrice();
+            return true;
+        }
+
         return false;
+    }
+
+    public void setHighestBidPrice(Double highestBidPrice) {
+        this.highestBidPrice = highestBidPrice;
     }
     
     
+
+    @Override
+    public String toString() {
+        return "Lot{" + "id=" + id + ", reservedPrice=" + reservedPrice + ", highestBidPrice=" 
+                + highestBidPrice + ", duration=" + duration + ", pickdate=" 
+                + pickdate + ", grade=" + grade + ", life_days=" + life_days + ", quantity=" 
+                + quantity + ", bids=" + bids + '}';
+    }
+
 }

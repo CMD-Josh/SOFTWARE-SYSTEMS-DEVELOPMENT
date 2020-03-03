@@ -5,18 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.ManyToOne;
+import org.solent.com504.project.model.lot.dto.Lot;
 
 @Entity
-@Table(name = "bid")
 public class Bid {
     private Double value;
 
     private Date timeStamp;
 
-    private Long bid_id;
+    private Long id;
 
-    private Long userId;
+    private Long partyId;
+    
+    private Lot lot;
     
     public Double getValue() {
         return value;
@@ -37,16 +39,38 @@ public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
-        return bid_id;
+        return id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public Long getPartyId() {
+        return partyId;
     }
+
+    public void setPartyId(Long partyId) {
+        this.partyId = partyId;
+    }
+
+    @ManyToOne
+    public Lot getLot() {
+        return lot;
+    }
+
+    public void setLot(Lot lot) {
+        this.lot = lot;
+    }
+
+    @Override
+    public String toString() {
+        return "Bid{" + "value=" + value + ", timeStamp=" + timeStamp + ", id=" + id + ", partyId=" + partyId + ", lot=" + lot + '}';
+    }
+
+
+
+
 
 
 }

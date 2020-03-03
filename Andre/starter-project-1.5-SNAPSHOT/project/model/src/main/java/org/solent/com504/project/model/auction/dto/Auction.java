@@ -1,12 +1,14 @@
 package org.solent.com504.project.model.auction.dto;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -20,7 +22,6 @@ public class Auction {
     
     public Long id;
     
-    private Date startDate;
 
     private Date startTime;
 
@@ -32,9 +33,15 @@ public class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getAuctionId() {
+    public Long getId() {
         return id;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    
     
     public AuctionType getAuctionType() {
         return auctionType;
@@ -44,13 +51,7 @@ public class Auction {
         this.auctionType = auctionType;
     }
     
-    public Date getStartDate() {
-        return startDate;
-    }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
 
     public Date getStartTime() {
         return startTime;
@@ -68,6 +69,7 @@ public class Auction {
         this.type = type;
     }
 
+    @OneToMany(fetch = FetchType.EAGER)
     public Set<Lot> getLots() {
         return lots;
     }

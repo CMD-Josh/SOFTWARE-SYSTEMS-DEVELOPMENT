@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring.xml"})
 public class AuctionRepositoryTest {
+
     final static Logger LOG = LogManager.getLogger(AuctionRepositoryTest.class);
 
     @Autowired
@@ -37,7 +38,11 @@ public class AuctionRepositoryTest {
         LOG.debug("before test complete");
     }
 
-    
+    @Test
+    public void test0() {
+        //just to test
+    }
+
     @Transactional
     @Test
     public void test1() {
@@ -45,9 +50,9 @@ public class AuctionRepositoryTest {
 
         Auction auction1 = new Auction();
         auction1 = auctionRepository.save(auction1);
-        System.out.println("auction1=" + auction1);
+        System.out.println("auction1=" + auction1.toString());
 
-        Long id = auction1.getAuctionId();
+        Long id = auction1.getId();
         Auction auction2 = auctionRepository.getOne(id);
         System.out.println("auction2=" + auction2);
         LOG.debug("end of test1");

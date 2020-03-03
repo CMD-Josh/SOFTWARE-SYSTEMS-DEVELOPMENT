@@ -5,6 +5,7 @@
  */
 package org.solent.com504.project.impl.dao.auction.springdata;
 
+import java.util.Date;
 import java.util.List;
 import org.solent.com504.project.model.auction.dto.Auction;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,8 +21,8 @@ import org.springframework.stereotype.Repository;
 public interface AuctionRepository extends JpaRepository<Auction, Long> {
    
       
-      @Query("select a from Auction a where a.date = :date and a.time = :time")
-      public List<Auction> findByDate(@Param("data") String date, @Param("time") String time);
+      @Query("select a from Auction a where a.startTime = :startTime")
+      public List<Auction> findByStartTime(@Param("startTime") Date StartTime);
       
       // TODO: Implement the other methods
 }

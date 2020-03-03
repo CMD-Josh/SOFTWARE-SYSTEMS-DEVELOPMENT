@@ -1,14 +1,13 @@
 package org.solent.com504.project.model.lot.dto;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import org.solent.com504.project.model.bid.dto.Bid;
 
@@ -31,7 +30,7 @@ public class Lot {
 
     private Integer quantity;
 
-    private List<Bid> bids = new ArrayList();
+    private Set<Bid> bids = new HashSet();
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -56,9 +55,11 @@ public class Lot {
     }
 
     private void setHighestBidPrice() {
-        //TODO: find the current highest bid in the bids array
-        Bid bid = bids.get(bids.size() - 1);
-        this.highestBidPrice = bid.getValue();
+        Double x = 0.0;
+        for(Bid bid:bids){
+            if(bid.getValue() > x){x=bid.getValue();}
+        }
+        this.highestBidPrice = x;
     }
 
     public Integer getDuration() {
@@ -102,11 +103,11 @@ public class Lot {
     }
 
     @OneToMany(fetch = FetchType.LAZY)
-    public List<Bid> getBids() {
+    public Set<Bid> getBids() {
         return bids;
     }
 
-    public void setBids(List<Bid> bids) {
+    public void setBids(Set<Bid> bids) {
         this.bids = bids;
     }
 

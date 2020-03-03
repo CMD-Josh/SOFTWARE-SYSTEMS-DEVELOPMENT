@@ -104,7 +104,7 @@ public class ModelJaxbTest {
             //bid objects needs to be iplemented with getters and setters
             Bid bid1 = new Bid();
             Bid bid2 = new Bid();
-            List<Bid> bids = new ArrayList();
+            Set<Bid> bids = new HashSet();
             
             //bids and lots to lists
             bids.add(bid1);
@@ -133,7 +133,7 @@ public class ModelJaxbTest {
             //bid objects needs to be iplemented with getters and setters
             Bid bid3 = new Bid();
             Bid bid4 = new Bid();
-            List<Bid> bids2 = new ArrayList();
+            Set<Bid> bids2 = new HashSet();
             
             //bids and lots to lists
             bids.add(bid3);

@@ -19,7 +19,7 @@
 
     // accessing service 
     ServiceFacade serviceFacade = (ServiceFacade) request.getAttribute("serviceFacade");
-    AuctionService auctionServ = (AuctionService) request.getAttribute("auctionService");
+    //AuctionService auctionServ = (AuctionService) request.getAttribute("auctionService");
 
     // accessing request parameters
     String actionStr = request.getParameter("action");
@@ -53,6 +53,6 @@
         <p>Getting heartbeat message: <%= serviceFacade.getHeartbeat()%> (note message is auto refreshed every 20 seconds)</p>
         
         
-        <p>Accessing the auction service... <%= auctionServ.getAuctions()%></p>
+        <!-- <p>Accessing the auction service... <%=// auctionServ.getAuctions()%></p> -->
     </body>
 </html>

@@ -1,0 +1,6 @@
+/project/model/target/
+/project/web/target/
+/project/service/target/
+/project/dao-springdata-jpa/target/
+/project/client-rest/target/
+/project/web-client/target/

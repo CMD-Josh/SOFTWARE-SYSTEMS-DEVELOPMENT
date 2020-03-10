@@ -17,7 +17,7 @@ function onMessage(event) {
         printBidElement(message);
         document.getElementById("error").innerHTML = "";
     }else if(message.action === "highest"){
-        document.getElementById("HightBidValue").innerHTML = message.value;
+        document.getElementById("highestBidValue").innerHTML = message.value;
     }else if(message.action === "error"){
         document.getElementById("error").innerHTML = message.value;
     }

@@ -20,12 +20,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.solent.com504.project.model.auction.dto.Auction;
+import org.solent.com504.project.model.auction.service.AuctionService;
 import org.solent.com504.project.model.dto.ReplyMessage;
 import org.solent.com504.project.model.service.ServiceFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
 
 /**
  * To make the ReST interface easier to program. All of the replies are
@@ -36,22 +37,26 @@ import org.springframework.stereotype.Component;
  * replyMessage.getDebugMessage(); * @author cgallen
  */
 @Component // component allows resource to be picked up
-@Path("/appointmentService")
+@Path("/auctionService")
 public class RestService {
 
     // SETS UP LOGGING 
     // note that log name will be org.solent.com504.project.impl.rest.RestService
     final static Logger LOG = LogManager.getLogger(RestService.class);
-    
+
     // This serviceFacade object is injected by Spring
     @Autowired(required = true)
     @Qualifier("serviceFacade")
     ServiceFacade serviceFacade = null;
 
+    @Autowired(required = true)
+    @Qualifier("serviceFacade")
+    AuctionService auctionService = null;
+
     /**
      * this is a very simple rest test message which only returns a string
      *
-     * http://localhost:8084/projectweb/rest/appointmentService/
+     * http://localhost:8084/projectweb/rest/auctionService/
      *
      * @return String simple message
      */
@@ -64,7 +69,7 @@ public class RestService {
     /**
      * get heartbeat
      *
-     * http://localhost:8084/projectweb/rest/appointmentService/getHeartbeat
+     * http://localhost:8084/projectweb/rest/auctionService/getHeartbeat
      *
      * @return Response OK and heartbeat in debug message
      */
@@ -73,21 +78,21 @@ public class RestService {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getHeartbeat() {
         try {
-            
+
             ReplyMessage replyMessage = new ReplyMessage();
             LOG.debug("/getHeartbeat called");
-            
+
             if (serviceFacade == null) {
                 throw new RuntimeException("serviceFacade==null and has not been initialised");
             }
 
             String heartbeat = serviceFacade.getHeartbeat();
             replyMessage.setDebugMessage(heartbeat);
-            
+
             replyMessage.setCode(Response.Status.OK.getStatusCode());
-            
+
             return Response.status(Response.Status.OK).entity(replyMessage).build();
-            
+
         } catch (Exception ex) {
             LOG.error("error calling /getHeartbeat ", ex);
             ReplyMessage replyMessage = new ReplyMessage();
@@ -97,6 +102,45 @@ public class RestService {
         }
     }
 
- 
+    /**
+     * http://localhost:8084/projectweb/rest/auctionService/getAuctions
+     *
+     * @return
+     *
+     */
+    @GET
+    @Path("/getAuctions")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getAuctions() {
+
+        try {
+
+            ReplyMessage replyMessage = new ReplyMessage();
+
+            LOG.debug("/getAuctions called");
+
+            if (auctionService == null) {
+                throw new RuntimeException("auctionService==null and has not been initialised");
+            }
+
+            List<Auction> auctionList = auctionService.getAuctions();
+            replyMessage.setAuctionList(auctionList);
+            replyMessage.setCode(Response.Status.OK.getStatusCode());
+            return Response.status(Response.Status.OK).entity(replyMessage).build();
+        } catch (Exception ex) {
+
+            LOG.error("error calling /getAuctions ", ex);
+
+            ReplyMessage replyMessage = new ReplyMessage();
+
+            replyMessage.setCode(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+
+            replyMessage.setDebugMessage("error calling /getAuctions " + ex.getMessage());
+
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(replyMessage).build();
+
+        }
+
+    }
 
 }

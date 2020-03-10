@@ -24,8 +24,6 @@ public class Auction {
     
 
     private Date startTime;
-
-    private AuctionType type;
     
     private Set<Lot> lots;
     
@@ -62,11 +60,11 @@ public class Auction {
     }
 
     public AuctionType getType() {
-        return type;
+        return auctionType;
     }
 
     public void setType(AuctionType type) {
-        this.type = type;
+        this.auctionType = type;
     }
 
     @OneToMany(fetch = FetchType.EAGER)

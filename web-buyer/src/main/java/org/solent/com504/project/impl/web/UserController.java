@@ -12,6 +12,8 @@ import java.util.Map.Entry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.solent.com504.project.impl.validator.UserValidator;
+import org.solent.com504.project.model.auction.dto.Auction;
+import org.solent.com504.project.model.auction.service.AuctionService;
 import org.solent.com504.project.model.party.dto.Address;
 import org.solent.com504.project.model.party.dto.Party;
 import org.solent.com504.project.model.party.dto.PartyRole;
@@ -53,6 +55,9 @@ public class UserController {
     @Autowired
     private SecurityService securityService;
 
+    @Autowired
+    private AuctionService auctionService;
+    
     @Autowired
     private UserValidator userValidator;
 
@@ -105,6 +110,8 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String home(Model model) {
+        List<Auction> auctionList = auctionService.getAuctions();
+        
         return "home";
     }
 

@@ -14,6 +14,11 @@ import org.solent.com504.project.model.auction.dto.Auction;
  */
 public interface AuctionService {
     
-    public List<Auction> getAuctions();
+    public List<Auction> getAuctions(); //tested
     
+    public void saveAuction(Auction auction); //tested
+    
+    public void deleteAuction(Auction auction); //not tested
+    
+    public void deleteAllAuctions(); // tested
 }

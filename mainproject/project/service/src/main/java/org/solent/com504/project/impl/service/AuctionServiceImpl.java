@@ -31,4 +31,18 @@ public class AuctionServiceImpl implements AuctionService{
         return auctionRepo.findAll();
     }
     
+    @Override
+    public void saveAuction(Auction auction) {
+        auctionRepo.save(auction);
+    }
+  
+    @Override
+    public void deleteAuction(Auction auction) {
+        auctionRepo.delete(auction);
+    }
+    
+    @Override
+    public void deleteAllAuctions() {
+        auctionRepo.deleteAll();
+    }
 }

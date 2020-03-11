@@ -1,12 +1,16 @@
 package org.solent.com504.project.model.auction.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -18,14 +22,13 @@ import org.solent.com504.project.model.lot.dto.Lot;
 @XmlAccessorType(XmlAccessType.FIELD)
 
 @Entity
-public class Auction {
+public class Auction implements Serializable {
+    
+    private static final long serialVersionUID = -1798070786993154676L;
     
     public Long id;
     
-
     private Date startTime;
-
-    private AuctionType type;
     
     private Set<Lot> lots;
     
@@ -42,7 +45,6 @@ public class Auction {
     }
     
     
-    
     public AuctionType getAuctionType() {
         return auctionType;
     }
@@ -50,8 +52,6 @@ public class Auction {
     public void setAuctionType(AuctionType auctionType) {
         this.auctionType = auctionType;
     }
-    
-
 
     public Date getStartTime() {
         return startTime;
@@ -61,15 +61,7 @@ public class Auction {
         this.startTime = startTime;
     }
 
-    public AuctionType getType() {
-        return type;
-    }
-
-    public void setType(AuctionType type) {
-        this.type = type;
-    }
-
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.ALL}) //@@@ had to add this cascade thing so it would persist data
     public Set<Lot> getLots() {
         return lots;
     }
@@ -77,10 +69,10 @@ public class Auction {
     public void setLots(Set<Lot> lots) {
         this.lots = lots;
     }
-
+    
     @Override
     public String toString() {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        return "Auction{" + "id=" + id + ", startTime=" + startTime + ", AuctionType=" + auctionType  + '}';
     }
 
 }

@@ -1,8 +1,10 @@
 package org.solent.com504.project.model.lot.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,8 +14,10 @@ import javax.persistence.OneToMany;
 import org.solent.com504.project.model.bid.dto.Bid;
 
 @Entity
-public class Lot {
+public class Lot implements Serializable {
 
+    private static final long serialVersionUID = -1798070786993154676L;
+    
     private Long id;
 
     private Double reservedPrice = 0.0;
@@ -102,7 +106,7 @@ public class Lot {
         this.quantity = quantity;
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY,cascade={CascadeType.PERSIST, CascadeType.MERGE})
     public Set<Bid> getBids() {
         return bids;
     }

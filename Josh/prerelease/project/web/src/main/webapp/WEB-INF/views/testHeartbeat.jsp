@@ -53,6 +53,7 @@
         <p>Getting heartbeat message: <%= serviceFacade.getHeartbeat()%> (note message is auto refreshed every 20 seconds)</p>
         
         
-        <p>Accessing the auction service... <%= auctionServ.getAuctions()%></p>
+        <p>Accessing the auction service... <%= auctionServ.getAuctions().get(0).getType() %></p>
+        <p>Hello world!</p>
     </body>
 </html>

@@ -2,6 +2,7 @@ package org.solent.com504.project.model.auction.dto;
 
 import java.util.Date;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,6 @@ public class Auction {
     
     public Long id;
     
-
     private Date startTime;
     
     private Set<Lot> lots;
@@ -67,7 +67,7 @@ public class Auction {
         this.auctionType = type;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public Set<Lot> getLots() {
         return lots;
     }

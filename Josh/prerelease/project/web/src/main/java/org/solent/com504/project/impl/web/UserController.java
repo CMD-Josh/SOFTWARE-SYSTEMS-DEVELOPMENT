@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.solent.com504.project.impl.validator.UserValidator;
+import org.solent.com504.project.model.auction.service.AuctionService;
 import org.solent.com504.project.model.party.dto.Address;
 import org.solent.com504.project.model.party.dto.Party;
 import org.solent.com504.project.model.party.dto.PartyRole;
@@ -22,6 +23,7 @@ import org.solent.com504.project.model.user.dto.UserRoles;
 import org.solent.com504.project.model.user.service.SecurityService;
 import org.solent.com504.project.model.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,6 +57,11 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+    
+    // Allows access to the auction service
+    @Autowired(required = true)
+    @Qualifier("auctionService")
+    private AuctionService auctionService;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -105,6 +112,9 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String home(Model model) {
+        
+        model.addAttribute("auctionService", auctionService);
+        
         return "home";
     }
 

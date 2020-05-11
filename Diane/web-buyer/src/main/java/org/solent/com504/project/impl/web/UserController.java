@@ -110,11 +110,14 @@ public class UserController {
 
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String home(Model model) {
-        List<Auction> auctionList = auctionService.getAuctions();
+        
+        if(!model.containsAttribute("auctionService")){
+            model.addAttribute("auctionService", auctionService);
+        }
         
         return "home";
     }
-
+    
     @RequestMapping(value = {"/about"}, method = RequestMethod.GET)
     public String about(Model model) {
         return "about";
